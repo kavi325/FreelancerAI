@@ -8,43 +8,72 @@ $registerBoth = isset($_GET['role']) && $_GET['role'] === 'both';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Registration | FreelancerAI</title>
+    <title><?php echo $registerBoth ? 'Client & Freelancer' : 'Client'; ?> Registration | FreelancerAI</title>
+
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/auth.css">
 </head>
 <body>
 
 <div class="auth-page">
+
     <div class="auth-brand">
         <a href="../index.php" class="logo">Freelancer<span>AI</span></a>
-        <p>Create your client account</p>
+        <p><?php echo $registerBoth ? 'Create your client and freelancer account' : 'Create your client account'; ?></p>
     </div>
 
     <div class="auth-card registration-card">
+
         <div class="auth-heading">
-            <span class="form-label-top">CLIENT REGISTRATION</span>
+            <span class="form-label-top">
+                <?php echo $registerBoth ? 'CLIENT & FREELANCER REGISTRATION' : 'CLIENT REGISTRATION'; ?>
+            </span>
+
             <h1>Create Your Account</h1>
-            <p>Start finding the right AI professionals for your projects.</p>
+
+            <p>
+                <?php echo $registerBoth
+                    ? 'Manage projects and showcase your professional skills.'
+                    : 'Start finding the right AI professionals for your projects.'; ?>
+            </p>
         </div>
 
-        <form action="#" method="POST">
+        <form action="process_register.php" method="POST">
+
+            <input type="hidden" name="role"
+                   value="<?php echo $registerBoth ? 'both' : 'client'; ?>">
+
+            <!-- BASIC INFORMATION -->
+
             <div class="form-group">
                 <label>Full Name</label>
-                <input type="text" name="full_name" placeholder="Enter your full name" required>
+                <input type="text" name="full_name"
+                       placeholder="Enter your full name" required>
             </div>
 
             <div class="form-group">
                 <label>Email Address</label>
-                <input type="email" name="email" placeholder="Enter your email address" required>
+                <input type="email" name="email"
+                       placeholder="Enter your email address" required>
             </div>
 
             <div class="form-group">
                 <label>Phone Number</label>
-                <input type="tel" name="phone" placeholder="Enter your phone number">
+                <input type="tel" name="phone"
+                       placeholder="Enter your phone number">
             </div>
 
             <div class="form-group">
+                <label>Country</label>
+                <input type="text" name="country"
+                       placeholder="Enter your country" required>
+            </div>
+
+            <!-- CLIENT PROFILE -->
+
+            <div class="form-group">
                 <label>Client Type</label>
+
                 <select name="client_type" required>
                     <option value="">Select client type</option>
                     <option value="individual">Individual</option>
@@ -53,36 +82,96 @@ $registerBoth = isset($_GET['role']) && $_GET['role'] === 'both';
             </div>
 
             <div class="form-group">
-                <label>Organization Name <span class="optional">(Optional)</span></label>
-                <input type="text" name="organization_name" placeholder="Enter organization name">
+                <label>
+                    Organization Name
+                    <span class="optional">(Required for organizations)</span>
+                </label>
+
+                <input type="text" name="organization_name"
+                       placeholder="Enter organization name">
             </div>
 
-            <div class="form-group">
-                <label>Country</label>
-                <input type="text" name="country" placeholder="Enter your country" required>
-            </div>
+            <!-- FREELANCER PROFILE -->
+
+            <?php if ($registerBoth): ?>
+
+                <div class="form-section">
+                    <h2>Freelancer Profile</h2>
+                    <p>Complete these details to offer your professional services.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Professional Title</label>
+                    <input type="text" name="professional_title"
+                           placeholder="e.g. AI Developer, ML Engineer" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Biography</label>
+                    <textarea name="biography"
+                              placeholder="Tell clients about your skills and experience"
+                              rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Experience (Years)</label>
+                    <input type="number" name="experience_years"
+                           min="0" step="0.5"
+                           placeholder="e.g. 2" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Hourly Rate (USD)</label>
+                    <input type="number" name="hourly_rate"
+                           min="0" step="0.01"
+                           placeholder="e.g. 25.00" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Availability Status</label>
+                    <select name="availability_status" required>
+                        <option value="available">Available</option>
+                        <option value="busy">Busy</option>
+                        <option value="unavailable">Unavailable</option>
+                    </select>
+                </div>
+
+            <?php endif; ?>
+
+            <!-- ACCOUNT SECURITY -->
 
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Create a password" required>
+                <input type="password" name="password"
+                       placeholder="Create a password"
+                       minlength="8" required>
             </div>
 
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="password" name="confirm_password" placeholder="Confirm your password" required>
+                <input type="password" name="confirm_password"
+                       placeholder="Confirm your password"
+                       minlength="8" required>
             </div>
 
-            <input type="hidden" name="register_both" value="<?php echo $registerBoth ? '1' : '0'; ?>">
+            <button type="submit" class="auth-button">
+                <?php echo $registerBoth
+                    ? 'Create Client & Freelancer Account'
+                    : 'Create Client Account'; ?>
+            </button>
 
-            <button type="submit" class="auth-button">Create Client Account</button>
         </form>
 
         <div class="auth-switch">
             Already registered? <a href="login.php">Login</a>
         </div>
+
     </div>
 
-    <a href="register.php" class="back-home">← Back to Registration Options</a>
+    <a href="register.php" class="back-home">
+        ← Back to Registration Options
+    </a>
+
 </div>
 
 </body>
