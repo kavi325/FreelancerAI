@@ -2,7 +2,7 @@
 <div class="top-bar">
     <div class="container top-bar-content">
         <div>
-            <a href="index.php">About Us</a>
+            <a href="about.php">About Us</a>
             <a href="projects/browse.php">Explore Projects</a>
             <a href="auth/register.php">Become a Freelancer</a>
         </div>
