@@ -17,15 +17,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         try {
             $stmt = $pdo->prepare("
-                SELECT 
+                SELECT
                     u.user_id,
                     u.full_name,
                     u.email,
                     u.password_hash,
                     u.account_status,
-                    c.user_id AS client_id
+                    c.user_id AS client_id,
+                    f.user_id AS freelancer_id,
+                    m.user_id AS management_id,
+                    a.user_id AS admin_id
                 FROM `USER` u
                 LEFT JOIN CLIENT c ON u.user_id = c.user_id
+                LEFT JOIN FREELANCER f ON u.user_id = f.user_id
+                LEFT JOIN MANAGEMENT m ON u.user_id = m.user_id
+                LEFT JOIN ADMINISTRATION a ON u.user_id = a.user_id
                 WHERE u.email = ?
                 LIMIT 1
             ");
@@ -33,27 +39,47 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute([$email]);
             $user = $stmt->fetch();
 
-            if (
-                $user &&
-                password_verify($password, $user["password_hash"])
-            ) {
+            if ($user && password_verify($password, $user["password_hash"])) {
 
                 if ($user["account_status"] !== "active") {
                     $error = "Your account is not active. Please contact support.";
-                } elseif (!empty($user["client_id"])) {
+                } else {
 
                     session_regenerate_id(true);
 
                     $_SESSION["user_id"] = $user["user_id"];
                     $_SESSION["full_name"] = $user["full_name"];
                     $_SESSION["email"] = $user["email"];
-                    $_SESSION["role"] = "client";
 
-                    header("Location: ../client/dashboard.php");
-                    exit;
+                    if (!empty($user["admin_id"])) {
 
-                } else {
-                    $error = "This account is not registered as a client.";
+                        $_SESSION["role"] = "admin";
+                        header("Location: ../management/dashboard.php");
+
+                    } elseif (!empty($user["management_id"])) {
+
+                        $_SESSION["role"] = "management";
+                        header("Location: ../management/dashboard.php");
+
+                    } elseif (!empty($user["freelancer_id"])) {
+
+                        $_SESSION["role"] = "freelancer";
+                        header("Location: ../freelancer/dashboard.php");
+
+                    } elseif (!empty($user["client_id"])) {
+
+                        $_SESSION["role"] = "client";
+                        header("Location: ../client/dashboard.php");
+
+                    } else {
+                        session_unset();
+                        session_destroy();
+                        $error = "No account role is assigned to this user.";
+                    }
+
+                    if (empty($error)) {
+                        exit;
+                    }
                 }
 
             } else {
@@ -66,6 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
