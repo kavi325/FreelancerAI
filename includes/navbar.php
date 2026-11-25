@@ -3,7 +3,7 @@
     <div class="container top-bar-content">
         <div>
             <a href="about.php">About Us</a>
-            <a href="projects/browse.php">Explore Projects</a>
+            <a href="auth/login.php">Explore Projects</a>
             <a href="auth/register.php">Become a Freelancer</a>
         </div>
         <a href="auth/login.php">Login / Register</a>
@@ -26,7 +26,7 @@
 <nav class="navigation">
     <div class="container nav-content">
         <a href="index.php" class="active">Home</a>
-        <a href="projects/browse.php">Browse Projects</a>
+        <a href="auth/login.php">Browse Projects</a>
         <a href="auth/register.php">Find Work</a>
         <a href="auth/register.php">Hire Talent</a>
         <a href="auth/login.php">Login</a>

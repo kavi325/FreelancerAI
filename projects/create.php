@@ -27,7 +27,7 @@
     </div>
 </nav>
 
-<main class="container">
+<main class="container project-page">
 
     <section class="hero">
         <div>
@@ -37,7 +37,7 @@
         </div>
     </section>
 
-    <section class="institution-section">
+    <section class="institution-section project-section">
 
         <div class="section-heading">
             <div>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <form action="" method="post">
+        <form action="" method="POST" class="project-form">
 
             <div class="form-group">
                 <label for="project_title">Project Title</label>
@@ -71,30 +71,34 @@
                 ></textarea>
             </div>
 
-            <div class="form-group">
-                <label for="budget_min">Minimum Budget</label>
-                <input
-                    type="number"
-                    id="budget_min"
-                    name="budget_min"
-                    min="0"
-                    step="0.01"
-                    placeholder="Enter minimum budget"
-                    required
-                >
-            </div>
+            <div class="budget-grid">
 
-            <div class="form-group">
-                <label for="budget_max">Maximum Budget</label>
-                <input
-                    type="number"
-                    id="budget_max"
-                    name="budget_max"
-                    min="0"
-                    step="0.01"
-                    placeholder="Enter maximum budget"
-                    required
-                >
+                <div class="form-group">
+                    <label for="budget_min">Minimum Budget</label>
+                    <input
+                        type="number"
+                        id="budget_min"
+                        name="budget_min"
+                        min="0"
+                        step="0.01"
+                        placeholder="Minimum budget"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="budget_max">Maximum Budget</label>
+                    <input
+                        type="number"
+                        id="budget_max"
+                        name="budget_max"
+                        min="0"
+                        step="0.01"
+                        placeholder="Maximum budget"
+                        required
+                    >
+                </div>
+
             </div>
 
             <div class="form-group">
@@ -123,7 +127,7 @@
                     <option value="Data Science">Data Science</option>
                     <option value="Robotics">Robotics</option>
                 </select>
-                <p>Select the skills required for your project.</p>
+                <p class="form-hint">Hold Ctrl (Windows) or Command (Mac) to select multiple skills.</p>
             </div>
 
             <div class="form-group">
@@ -136,7 +140,7 @@
                 ></textarea>
             </div>
 
-            <div class="hero-buttons">
+            <div class="project-actions">
                 <button type="submit" class="btn-primary">Publish Project</button>
                 <a href="my_projects.php" class="btn-secondary">Cancel</a>
             </div>
