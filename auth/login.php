@@ -45,40 +45,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $error = "Your account is not active. Please contact support.";
                 } else {
 
-                    session_regenerate_id(true);
-
-                    $_SESSION["user_id"] = $user["user_id"];
-                    $_SESSION["full_name"] = $user["full_name"];
-                    $_SESSION["email"] = $user["email"];
+                    $role = "";
+                    $redirect = "";
 
                     if (!empty($user["admin_id"])) {
-
-                        $_SESSION["role"] = "admin";
-                        header("Location: ../management/dashboard.php");
+                        $role = "admin";
+                        $redirect = "../admin/dashboard.php";
 
                     } elseif (!empty($user["management_id"])) {
-
-                        $_SESSION["role"] = "management";
-                        header("Location: ../management/dashboard.php");
+                        $role = "management";
+                        $redirect = "../management/dashboard.php";
 
                     } elseif (!empty($user["freelancer_id"])) {
-
-                        $_SESSION["role"] = "freelancer";
-                        header("Location: ../freelancer/dashboard.php");
+                        $role = "freelancer";
+                        $redirect = "../freelancer/dashboard.php";
 
                     } elseif (!empty($user["client_id"])) {
-
-                        $_SESSION["role"] = "client";
-                        header("Location: ../client/dashboard.php");
-
-                    } else {
-                        session_unset();
-                        session_destroy();
-                        $error = "No account role is assigned to this user.";
+                        $role = "client";
+                        $redirect = "../client/dashboard.php";
                     }
 
-                    if (empty($error)) {
+                    if ($role !== "") {
+
+                        session_regenerate_id(true);
+
+                        $_SESSION["user_id"] = $user["user_id"];
+                        $_SESSION["full_name"] = $user["full_name"];
+                        $_SESSION["email"] = $user["email"];
+                        $_SESSION["role"] = $role;
+
+                        header("Location: " . $redirect);
                         exit;
+
+                    } else {
+                        $error = "No account role is assigned to this user.";
                     }
                 }
 
@@ -93,7 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
 <div class="auth-page">
+
     <div class="auth-brand">
         <a href="../index.php" class="logo">Freelancer<span>AI</span></a>
         <p>Your Skills. Your Intelligence. Your Opportunities.</p>
@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <?php if (!empty($error)): ?>
             <div class="auth-error">
-                <?= htmlspecialchars($error) ?>
+                <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
             </div>
         <?php endif; ?>
 
@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     id="email"
                     name="email"
                     placeholder="Enter your email address"
-                    value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
+                    value="<?= htmlspecialchars($_POST["email"] ?? "", ENT_QUOTES, 'UTF-8') ?>"
                     required
                 >
             </div>
@@ -175,6 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <a href="../index.php" class="back-home">
         ← Back to Homepage
     </a>
+
 </div>
 
 </body>
