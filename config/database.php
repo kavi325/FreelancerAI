@@ -1,10 +1,9 @@
-
 <?php
 
 $host = "localhost";
 $dbname = "ai_freelance_platform";
 $username = "root";
-$password = "SanuAUG0612";
+$password = "#";
 
 try {
     $pdo = new PDO(

@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     if (!empty($user["admin_id"])) {
                         $role = "admin";
-                        $redirect = "../admin/dashboard.php";
+                        $redirect = "../management/dashboard.php";
 
                     } elseif (!empty($user["management_id"])) {
                         $role = "management";
