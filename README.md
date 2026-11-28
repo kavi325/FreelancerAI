@@ -5,7 +5,7 @@ A database-driven web application designed to connect clients and organizations 
 ## Local Setup
 
 1. Clone the repository into your local Apache / Laragon web root (`FreelancerAI/`).
-2. Import the database schema from `config/ai_freelance_platform.sql` (or `config/db.sql` if using the exported sample dataset) into MySQL / MariaDB.
+2. Import the database schema from  `config/db.sql`  into MySQL / MariaDB.
 3. Update `config/database.php` with your own local MySQL username and password. Do not commit personal database passwords.
 4. Open the application in your browser at `http://localhost/FreelancerAI/`.
 
@@ -28,8 +28,8 @@ Sign in at `http://localhost/FreelancerAI/auth/login.php`:
 
 | Role | Email | Password | Permissions in Management Dashboard |
 | --- | --- | --- | --- |
-| Management (`MANAGEMENT`) | `manager@freelancerai.local` | `Manage@2026` | View Overview, search/inspect Users, add/edit AI Services & AI Skills, view Projects (read-only) |
-| Super Admin (`ADMINISTRATION`) | `admin@freelancerai.local` | `Admin@2026` | All Management features + update other users' `account_status` + delete unused AI Services and unreferenced AI Skills |
+| Management (`MANAGEMENT`) | `management@gmail.com` | `Manage@2026` | View Overview, search/inspect Users, add/edit AI Services & AI Skills, view Projects (read-only) |
+| Super Admin (`ADMINISTRATION`) | `admin@gmail.com` | `Admin@2026` | All Management features + update other users' `account_status` + delete unused AI Services and unreferenced AI Skills |
 
 ### Verification Notes
 - Logged-out users are redirected to `auth/login.php`.
